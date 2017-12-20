@@ -22,6 +22,8 @@
    $ git reset --hard HEAD^    --hard 直接提交
    reset切换后，push，若是报错
    可以使用 git pull + 远程名+ 分支名操作，使得远程与本地之间保持一致 再进行push
+   git无法pull仓库refusing to merge unrelated histories 
+   $ git pull origin master ----allow-unrelated-histories
    $ git reflog 查看所有提交记录
    $ git reset --hard xxxxx  恢复到某一版本号 并且提交
 
