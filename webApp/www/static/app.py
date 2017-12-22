@@ -2,4 +2,7 @@
 #coding: utf-8
 __author__ = 'sunyunpeng'
 
-import logging; logging.basicConfig(level = logging.INFO)
+
+
+os.path.dirname(os.path.realpath(__file__))
+from webApp import logger
