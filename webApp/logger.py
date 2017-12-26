@@ -1,15 +1,38 @@
 # coding = utf-8
 
-__author  = 'sunyunpeng'
+__author__  = 'sunyunpeng'
 
-import logging
+import logging, os
+import codecs
+import shutil
 
 #创建一个logger
 logger =  logging.getLogger()
 logger.setLevel(logging.INFO)
 
 #第二步 创建一个handler 用于写入日志
-logfile = './log/logger.txt'
+logPath = './log'
+if os.path.exists(logPath):
+	# os.removedirs(logPath) 删除空文件夹
+	shutil.rmtree(logPath)  #递归删除文件夹
+	os.makedirs(logPath)
+else:
+	os.makedirs(logPath)
+
+logfile = logPath + '/logger.txt'
+if (not os.path.isfile(logfile)):
+	# os.mknod(logfile)       # 创建空文件
+	# fo = open(logfile, "wb") #没有就创建
+	f = codecs.open(logfile, 'a', 'utf8') #尽量用这种方式 不能创建
+# fo = open(logfile, "wb")
+# f = codecs.open(logfile, 'a', 'utf8')  #没有就创建
+# f = codecs.open(logfile, 'r', 'utf8')
+
+
+# 函数用来删除一个文件:os.remove()
+# 删除多个目录：os.removedirs（r“c：\python”）
+
+
 fh = logging.FileHandler(logfile, mode = 'w')
 fh.setLevel(logging.DEBUG)
 
@@ -41,10 +64,12 @@ formatter = logging.Formatter('%(asctime)s&nbsp;-&nbsp;%(filename)s[line:%(linen
 fh.setFormatter(formatter)
 ch.setFormatter(formatter)
 
+logger.addHandler(fh)  
+logger.addHandler(ch) 
+
 
 def logInfo(info):
-	logger.debug(info)
-
+	logger.info(info)
 
 if __name__ == '__main__':
 	pass
