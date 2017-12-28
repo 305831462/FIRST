@@ -26,6 +26,9 @@
    $ git pull origin master ----allow-unrelated-histories
    $ git reflog 查看所有提交记录
    $ git reset --hard xxxxx  恢复到某一版本号 并且提交
+   $ git clean 是用来删除一些没有 git add 的 文件；
+    -n 显示将要删除的文件和目录
+    -f 删除文件，-d 删除目录
 
    HEAD^就是表示上一个版本； 
    HEAD^^就是表示上上一个版本
