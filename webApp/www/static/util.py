@@ -8,6 +8,9 @@ __author__ = 'sunyunpeng'
 #因为所有用户都是由一个线程服务的，协程的执行速度必须非常快，才能处理大量用户的请求。
 #而耗时的IO操作不能在协程中以同步的方式调用，否则，等待一个IO操作时，系统无法响应任何其他用户。
 import asyncio
+import sqlite3
+# 导入MySQL驱动:
+import mysql.connector
 
 #创建连接池
 async def create_pool(loop, **kw):
@@ -68,11 +71,50 @@ async def execute(sql, args, autocommit=True):
             raise
         return affected
 
+# sudo /usr/local/mysql/support-files/mysql.server start
+# sudo /usr/local/mysql/support-files/mysql.server stop
+# sudo /usr/local/mysql/support-files/mysql.server restart
 
+# 在Mac或Linux上，需要编辑MySQL的配置文件，把数据库默认的编码全部改为UTF-8。MySQL的配置文件默认存放在/etc/my.cnf或者/etc/mysql/my.cnf：
 
+# [client]
+# default-character-set = utf8
 
+# [mysqld]
+# default-storage-engine = INNODB
+# character-set-server = utf8
+# collation-server = utf8_general_ci
 
+# show variables like '%char%';
 
+def testCreateMySqlDB():
+    # 注意把password设为你的root口令:
+    conn = mysql.connector.connect(user='root',  database='test')
+    cursor = conn.cursor()
+    # 创建user表:
+    # cursor.execute('create table testTable (id varchar(20) primary key, name varchar(20))')
+    # 插入一行记录，注意MySQL的占位符是%s:
+    cursor.execute('insert into testTable (id, name) values (%s, %s)', ['3', '外国人'])
+    # cursor.rowcount
+    # 提交事务:
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+
+def testSelcet():
+    conn = mysql.connector.connect(user='root',  database='test') #password='password',
+    # 运行查询:
+    cursor = conn.cursor()
+    cursor.execute('select * from testTable where id = %s', ('3',))
+    values = cursor.fetchall()
+    print(values)
+    # 关闭Cursor和Connection:
+    cursor.close()
+    conn.close()
+
+# testCreateMySqlDB()
+testSelcet()
 
 
 
