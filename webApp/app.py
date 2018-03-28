@@ -18,14 +18,14 @@ import logger
 
 
 def index(request):
-	return web.Response(body = b'<h1>Awesome</h1>')
+	return web.Response(body = b'<h1>Awesome</h1>', headers={'content-type':'text/html'})
 
 
 async def init(loop):
 	app = web.Application(loop = loop)
 	app.router.add_route('GET', '/', index)
 	srv = await loop.create_server(app.make_handler(), '127.0.0.1', 9009)
-	logger.logInfo('server started at http://127.0.0.1:9000...')
+	logger.logInfo('server started at http://127.0.0.1:9009...')
 	return srv
 
 loop = asyncio.get_event_loop()
