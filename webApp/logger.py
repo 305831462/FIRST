@@ -22,8 +22,8 @@ else:
 logfile = logPath + '/logger.txt'
 if (not os.path.isfile(logfile)):
 	# os.mknod(logfile)       # 创建空文件
-	# fo = open(logfile, "wb") #没有就创建
-	f = codecs.open(logfile, 'r', 'utf8') #尽量用这种方式 不能创建
+	fo = open(logfile, "wb") #没有就创建
+	# f = codecs.open(logfile, 'r', 'utf8') #尽量用这种方式 不能创建
 # fo = open(logfile, "wb")
 # f = codecs.open(logfile, 'a', 'utf8')  #没有就创建
 # f = codecs.open(logfile, 'r', 'utf8')
